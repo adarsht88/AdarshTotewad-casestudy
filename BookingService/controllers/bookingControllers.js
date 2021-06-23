@@ -1,4 +1,5 @@
-const Ticket = require('../models/tickets')
+const Ticket = require('../models/tickets');
+const axios = require('axios');
 
 /*
 
@@ -36,10 +37,22 @@ module.exports.book_get = (req,res) => {
 
 
 module.exports.book_post =  (req,res) => {
+
+
     const quantity = parseInt(req.body.quantity);
     const price = parseInt(req.body.price);
     const booking_id = Math.random().toString(36).substr(2, 5);
     let total = quantity*price;
+
+    // axios.get("http://localhost:4003/flight/search", {
+    //     query: {
+    //       source: 'pune',
+    //       destination:'nanded'
+    //     }}).then((res)=>{
+    //         console.log(res)
+    // })
+
+
    /*
     function total_price(price,quantity){
         for(let t=0;t<quantity.length;++t){
