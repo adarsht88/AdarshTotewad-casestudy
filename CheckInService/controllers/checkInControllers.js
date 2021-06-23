@@ -1,33 +1,5 @@
 const CheckIn = require('../models/seats')
 const CheckinService = require('../services/checkinService')
-/*
-module.exports = { checkin_post };
-
-
-async function checkin_post ( req, res ) {
-    try {
-      // We only pass the body object, never the req object
-      const result = await CheckinService.checkin_post( req.body );
-      return res.status(200).send( result );
-    } catch ( err ) {
-      res.status(500).send( err );
-    }
-  }
-
-
-*/
-
-
-
-module.exports.book_get = (req,res) => {
-    Ticket.find()
-        .then((result)=>{
-            res.status(200).send(result);
-        })
-        .catch((err)=>{
-            res.status(400).send(err)
-        })
-}
 
 
 
