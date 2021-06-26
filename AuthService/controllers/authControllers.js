@@ -50,9 +50,9 @@ module.exports.signup_post = (req, res) => {
         User.create(user)
             .then((user) => {
                 console.log(user)
-                //const token = createToken(user._id, user.email)
-                //res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 })
-                res.status(200).json({ message: "User Created Successfully!" });
+                const token = createToken(user._id, user.email)
+                res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 })
+                res.status(200).json({ message: "User Created and loged Successfully" });
             })
             .catch((err) => {
                 res.status(400).json({ message: "Email already exist" });
@@ -82,17 +82,26 @@ module.exports.signup_post = (req, res) => {
 //user login post
 module.exports.login_post = async (req, res) => {
     const { email, password } = req.body;
-    console.log(req.body);
     if (Object.keys(req.body).length === 0) 
         {
             res.status(205).json({ message: "Please enter all Fields" })
         }
     else {
             try {
-                const user = await User.login(email, password)
-                const token = createToken(user._id, user.email)
-                //res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 })
-                res.status(200).json({ token });
+                const user = await User.login(email, password);
+                console.log(user);
+                if(user != "incorrect password"){
+                    const token = createToken(user._id, user.email)
+                    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 })
+                    // res.status(200).json({ token });
+                    res.status(200).json({message:"Login Success: " +user.email});
+                }else{
+                    if(user != "incorrect email"){
+                        res.status(400).json({ message: "incorrect password"});
+                    }else{
+                        res.status(400).json({ message: "incorrect email"});
+                    }
+                }
             }
             catch (err) {
                 const errors = handleErrors(err);

@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-//const cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 const authRoutes = require('./routes/authRoutes');
 
 const morgan = require('morgan');
@@ -35,6 +35,9 @@ app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 
 app.use(cors());
 app.use(morgan("dev"));
+
+
+app.use(cookieParser());
 
 
 
