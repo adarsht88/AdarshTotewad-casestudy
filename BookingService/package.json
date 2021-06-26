@@ -12,7 +12,8 @@
     "supertest": "^6.1.3"
   },
   "scripts": {
-    "test": "mocha --timeout 1000000"
+    "test": "mocha --timeout 1000000",
+    "app": "nodemon app.js"
   },
   "keywords": [],
   "author": "",

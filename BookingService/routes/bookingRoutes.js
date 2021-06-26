@@ -1,6 +1,6 @@
 const {Router} = require("express");
 const bookingController  =require('../controllers/bookingControllers')
-
+const isAuthenticated = require('../../middlewares/isAuthenticated');
 const router =Router();
 
 /**
@@ -79,7 +79,7 @@ const router =Router();
  */
 
 
-router.post('/flight/book',bookingController.book_post);
+router.post('/flight/book',isAuthenticated,bookingController.book_post);
 
 
 /**

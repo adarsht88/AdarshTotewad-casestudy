@@ -5,7 +5,8 @@ module.exports = async function isAuthenticated(req, res, next) {
 
     jwt.verify(token, "secret", (err, user) => {
         if (err) {
-            return res.json({ message: err });
+            console.log(err)
+            return res.json({ message: "Invalid Token" });
         } else {
             req.user = user;
             // req.userId = decodedData.id;
@@ -15,4 +16,3 @@ module.exports = async function isAuthenticated(req, res, next) {
     });
 
 };
-
