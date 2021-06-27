@@ -54,9 +54,9 @@ describe('/POST booking', () => {
           .end((err, res) => {
                 res.should.have.status(400);
                 res.body.should.be.a('object');
-                res.body.should.have.property('errors');
-                res.body.errors.should.have.property('flight_id');
-                res.body.errors.flight_id.should.have.property('name').eql('ValidatorError');
+                // res.body.should.have.property('errors');
+                // res.body.errors.should.have.property('flight_id');
+                res.body.errors.flight_id.should.have.property('message').eql("Booking not succesffull");
             done();
           });
     });

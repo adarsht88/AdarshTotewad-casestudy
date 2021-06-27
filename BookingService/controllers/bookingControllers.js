@@ -1,26 +1,7 @@
 const Ticket = require('../models/tickets');
 const axios = require('axios');
 
-/*
 
-const handleErrors = (err)=>{
-    console.log(err.message, err.code);
-    let errors = {email: '', password:''};
-
-    if(err.code == 11000){
-        errors.email = "Email is already registerd.";
-        return errors;
-    }
-
-    if(err.message.includes('user validation failed')){
-        Object.values(err.errors).forEach(error =>{
-            error[error.properties.path] = error.properties.message;
-        });
-    }
-    return errors;
-}
-
-*/
 
 
 module.exports.book_get = (req,res) => {
@@ -51,16 +32,7 @@ module.exports.book_post =  (req,res) => {
     //     }}).then((res)=>{
     //         console.log(res)
     // })
-
-
-   /*
-    function total_price(price,quantity){
-        for(let t=0;t<quantity.length;++t){
-            total += price;
-        }
-    }
-    total_price(price,quantity);
-    */
+    
     const book_ticket = new Ticket({
         booking_id,
         flight_id: req.body.flight_id,
@@ -73,7 +45,7 @@ module.exports.book_post =  (req,res) => {
             res.status(200).send(result);
         })
         .catch((err)=>{
-            res.status(400).send(err);
+            res.status(400).json({ message: "Booking not succesffull"});
         })    
 }
 
@@ -85,12 +57,11 @@ module.exports.book_delete = (req,res) => {
    
     Ticket.findOneAndRemove(id)
         .then((result)=>{
-            res.status(200).send('Booking Canceled.');
+            res.status(200).json({ message: "Booking Cancelation request succesffull"});
         })
         .catch((err)=>{
-            res.status(400).send(err);
+            res.status(400).json({ message: "Booking Cancelation request not succesffull"});
         })
-    
 }
 
 
