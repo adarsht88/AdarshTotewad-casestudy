@@ -17,7 +17,6 @@ describe('/POST checkin', () => {
     it('it should check In', (done) => {
         let book = {
             booking_id:"mjlxu",
-            flight_id:129,
             seat_no:"A60"  
         }
       chai.request(server.app)
@@ -28,7 +27,6 @@ describe('/POST checkin', () => {
                 res.body.should.be.a('object');
                 res.body.should.have.property('_id');
                 res.body.should.have.property('booking_id').eq("mjlxu");
-                res.body.should.have.property('flight_id').eq(129);
                 res.body.should.have.property('seat_no').eq("A60");
             done();
           });
@@ -40,8 +38,7 @@ describe('/POST checkin', () => {
 
     it('it should not check In', (done) => {
         let book = {
-            booking_id:"mjlxu",
-            seat_no:"A60"  
+            booking_id:"mjlxu" 
         }
       chai.request(server.app)
           .post('/book/checkin')
@@ -49,9 +46,7 @@ describe('/POST checkin', () => {
           .end((err, res) => {
                 res.should.have.status(500);
                 res.body.should.be.a('object');
-                res.body.should.have.property('errors');
-                res.body.errors.should.have.property('flight_id');
-                res.body.errors.flight_id.should.have.property('name').eql('ValidatorError');
+                res.body.errors.flight_id.should.have.property('message').eql("CheckIn not successfull");
             done();
           });
     });
@@ -68,7 +63,7 @@ describe('/POST checkin', () => {
           .end((err, res) => {
                 res.should.have.status(500);
                 res.body.should.be.a('object');
-                res.body.should.have.property('errors');
+                res.body.errors.flight_id.should.have.property('message').eql("CheckIn not successfull");
             done();
           });
     });

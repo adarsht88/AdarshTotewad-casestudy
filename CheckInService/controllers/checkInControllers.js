@@ -12,7 +12,6 @@ module.exports.checkin_post =  (req,res) => {
     */
     const seatNo = new CheckIn({
         booking_id:req.body.booking_id,
-        flight_id: req.body.flight_id,
         seat_no: req.body.seat_no 
     })
     seatNo.save()
@@ -20,7 +19,7 @@ module.exports.checkin_post =  (req,res) => {
             res.status(200).send(result);
         })
         .catch((err)=>{
-            res.status(500).send(err);
+            res.status(500).json({ message: "CheckIn not successfull" });
         })    
 }
 

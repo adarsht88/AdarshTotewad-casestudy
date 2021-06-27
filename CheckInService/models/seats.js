@@ -6,10 +6,6 @@ const checkinSchema = new Schema({
         type:String,
         required:true       
     }, 
-    flight_id: {
-        type:Number,
-        required:true       
-    },
     seat_no: {
         type:String,
         required:true
