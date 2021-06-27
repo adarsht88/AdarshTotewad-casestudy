@@ -28,7 +28,7 @@ describe('/GET Flight', () => {
           .get('/flights')
           .end((err, res) => {
                 res.should.have.status(404);
-            done();
+                done();
           });
     });
 
@@ -83,10 +83,8 @@ describe('/POST Flight', () => {
           .end((err, res) => {
                 res.should.have.status(400);
                 res.body.should.be.a('object');
-                res.body.should.have.property('errors');
-                res.body.errors.should.have.property('flight_id');
-                res.body.errors.flight_id.should.have.property('name').eql('ValidatorError');
-            done();
+                res.body.should.have.property('message').eql("Flight not Added");
+                done();
           });
     });
 

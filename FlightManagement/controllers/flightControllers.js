@@ -28,7 +28,7 @@ module.exports.flight_get = (req,res) => {
             res.status(200).send(result);
         })
         .catch((err)=>{
-            res.status(400).send(err)
+                res.status(400).json({ message: "Flights not available" });
         })
 }
 
@@ -40,7 +40,7 @@ module.exports.flight_getbyId = (req,res) => {
             res.status(200).send(result);
         })
         .catch((err)=>{
-            res.status(400).send(err)
+            res.status(400).json({ message: "Flight not found" });
         })
 }
 
@@ -51,7 +51,7 @@ module.exports.flight_post = async (req,res) => {
             res.status(200).send(result);
         })
         .catch((err)=>{
-            res.status(400).send(err);
+            res.status(400).json({ message: "Flight not Added" });
         })
 }
 
@@ -67,7 +67,7 @@ module.exports.flight_update = (req,res) =>{
                 })
         })
         .catch((err)=>{
-            res.status(400).send(err);
+            res.status(400).json({ message: "Flight not updated" });
         })
   
 }
@@ -80,7 +80,7 @@ module.exports.flight_delete = (req,res) => {
             res.status(200).send("Flight deleted");
         })
         .catch((err)=>{
-            res.status(400).send(err);
+            res.status(400).json({ message: "Flight not deleted" });
         })  
 
 }
