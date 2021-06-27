@@ -46,7 +46,7 @@ describe('/POST checkin', () => {
           .end((err, res) => {
                 res.should.have.status(500);
                 res.body.should.be.a('object');
-                res.body.errors.flight_id.should.have.property('message').eql("CheckIn not successfull");
+                res.body.should.have.property('message').eql("CheckIn not successfull");
             done();
           });
     });
