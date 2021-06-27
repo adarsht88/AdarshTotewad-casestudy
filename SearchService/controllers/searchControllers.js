@@ -13,7 +13,7 @@ module.exports.flights_get = (req,res) => {
     const destination = req.query.destination;
     const date = req.query.date;
     if(isEmpty(source) || isEmpty(destination)){
-         res.status(400).send("Query is invalid")
+         res.status(400).json({ message: "Query is invalid" });
     }else{
          Flight.find({source:{$regex:source ,$options: '$i'}} && {destination:{$regex:destination ,$options: '$i'}} || {date:{$regex:date ,$options: '$i'}})
             .then((data)=>{
