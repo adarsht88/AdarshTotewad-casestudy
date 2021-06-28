@@ -19,8 +19,8 @@ const handleErrors = (err)=>{
 }
 
 const maxAge = 3 * 24 * 60 * 60
-const createToken = (id, email) => {
-    return jwt.sign({ id, email }, 'secret', {
+const createToken = ( email) => {
+    return jwt.sign({ email }, 'secret', {
         expiresIn: maxAge
     })
 }
@@ -50,7 +50,7 @@ module.exports.signup_post = (req, res) => {
         User.create(user)
             .then((user) => {
                 console.log(user)
-                const token = createToken(user._id, user.email)
+                const token = createToken( user.email)
                 res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 })
                 res.status(200).json({ message: "User Created and loged Successfully" });
             })
@@ -91,10 +91,10 @@ module.exports.login_post = async (req, res) => {
                 const user = await User.login(email, password);
                 console.log(user);
                 if(user != "incorrect password"){
-                    const token = createToken(user._id, user.email)
-                    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 })
-                    // res.status(200).json({ token });
-                    res.status(200).json({message:"Login Success: " +user.email});
+                    const token = createToken(user.email)
+                   // res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 })
+                    //res.status(200).json({ token });
+                    res.status(200).json({message:"Login Success: " +user.email,token});
                 }else{
                     if(user != "incorrect email"){
                         res.status(400).json({ message: "incorrect password"});
@@ -111,4 +111,9 @@ module.exports.login_post = async (req, res) => {
         }
     }
 
+
+    module.exports.logout_get = (req, res) => {
+        res.cookie('jwt', '', { maxAge: 1 });
+        res.redirect('/');
+      }
 

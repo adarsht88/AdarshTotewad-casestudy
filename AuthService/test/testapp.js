@@ -114,7 +114,7 @@ describe('/POST Login', () => {
           .end((err, res) => {
                 res.should.have.status(400);
                 res.body.should.be.a('object');
-                res.body.errors.flight_id.should.have.property('message').eql("incorrect password");
+                res.body.errors.flight_id.should.have.property('message').eql("Booking Cancelation request succesffull");
             done();
           });
     });

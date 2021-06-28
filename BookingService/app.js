@@ -20,6 +20,20 @@ const options = {
 				url: "http://localhost:4004",
 			},
 		],
+		components: {
+     	  securitySchemes: {
+            bearerAuth: {
+              type: "http",
+              scheme: "bearer",
+              bearerFormat: "JWT",
+            },
+          },
+        },
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
 	},
 	apis: ["./routes/*.js"],
 };

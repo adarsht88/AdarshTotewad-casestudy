@@ -107,7 +107,7 @@ router.post('/flight/book',isAuthenticated,bookingController.book_post);
 
 
 
-router.delete('/flight/cancelticket/:id',bookingController.book_delete);
+router.delete('flight/cancelticket/:id',isAuthenticated,bookingController.book_delete);
 
 
 

@@ -1,6 +1,7 @@
 const {Router} = require("express");
 
 const checkInController  =require('../controllers/checkInControllers')
+const isAuthenticated = require('../../middlewares/isAuthenticated');
 
 const router =Router();
 
@@ -74,7 +75,7 @@ const router =Router();
 
 
 
-router.post('/checkin',checkInController.checkin_post);
+router.post('book/checkin',isAuthenticated,checkInController.checkin_post);
 //router.delete('/flight/checkin/:id',checkInController.book_delete);
 
 

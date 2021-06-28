@@ -9,6 +9,18 @@ const swaggerUI = require("swagger-ui-express");
 const swaggerJsDoc = require('swagger-jsdoc');
 
 
+const app = express();
+
+// enable cors to the server
+  const corsOpt = {
+     origin: process.env.CORS_ALLOW_ORIGIN || '*', // this work well to configure origin url in the server
+     methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'], // to works well with web app, OPTIONS is required
+     allowedHeaders: ['Content-Type', 'Authorization'] // allow json and token in the headers
+ };
+ app.use(cors(corsOpt)); // cors for all the routes of the application
+ app.options('*', cors(corsOpt)); // automatic cors gen for HTTP verbs in all routes, This can be redundant but I kept to be sure that will always work
+
+
 const options = {
 	swaggerDefinition: {
 		openapi: "3.0.1",
@@ -28,12 +40,10 @@ const options = {
 
 const specs = swaggerJsDoc(options);
 
-const app = express();
 
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 
 
-app.use(cors());
 app.use(morgan("dev"));
 
 
@@ -48,11 +58,15 @@ app.set('view engine', 'ejs');
 
 const dbURI = 'mongodb+srv://travis:Adarsh1998@test-adarsh.rhscl.mongodb.net/flight-BS?retryWrites=true&w=majority';
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true })
-  .then((result) => app.listen(4001,()=>{
-      console.log("Litsening to port 4001.")
-  }))
-  .catch((err) => console.log(err));
+   .then( (data) =>{
+ 	app.listen(4001, () => {
+ 	console.log("Litsening to port 4001.")
+ 	})
+    app.get("/",(req,res)=>{
+ 	   res.send("connected");
+   });
 
+   }) 
 
 app.use(authRoutes);
 

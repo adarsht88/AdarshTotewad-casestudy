@@ -22,9 +22,9 @@ describe('/POST booking', () => {
             price: 1000
         }
       chai.request(server.app)
-          .post('/flight/book')
-          .send(book)
-          .end((err, res) => {
+        .post('/flight/book')
+        .send(book)
+        .end((err, res) => {
                 expect(res).to.have.status(200);
                 res.body.should.be.a('object');
                 res.body.should.have.property('_id');
@@ -35,12 +35,11 @@ describe('/POST booking', () => {
                 res.body.should.have.property('total_price').eq(5000);
                 res.body.should.have.property('booking_date');
             done();
-          });
+        });
         afterEach(async () => {
-            await Ticket.deleteOne({full_name: "Adarsh is Testing..."})
+            await Flight.deleteOne({full_name: "Adarsh is Testing..."})
          });
     });
-
 
     it('it should not book flight', (done) => {
         let book = {
@@ -52,18 +51,16 @@ describe('/POST booking', () => {
           .post('/flight/book')
           .send(book)
           .end((err, res) => {
-                res.should.have.status(400);
-                res.body.should.be.a('object');
-                // res.body.should.have.property('errors');
-                // res.body.errors.should.have.property('flight_id');
-                res.body.errors.flight_id.should.have.property('message').eql("Booking not succesffull");
-            done();
-          });
-    });
+              res.should.have.status(400);
+              res.body.should.be.a('object');
+              // res.body.should.have.property('errors');
+              // res.body.errors.should.have.property('flight_id');
+              res.body.should.have.property('message').eql("Booking not succesffull");
+          done();
+        });
 
-    
+    });    
 });
-
 
 
 describe('/DELETE/:id book', () => {
@@ -73,6 +70,8 @@ describe('/DELETE/:id book', () => {
               .delete('/flight/cancelticket/' + id)
               .end((err, res) => {
                     res.should.have.status(200);
+                    res.body.should.have.property('message').eql("Booking not succesffull");
+
                 done();
             });
     });

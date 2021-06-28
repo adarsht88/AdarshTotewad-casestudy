@@ -1,6 +1,6 @@
 const Ticket = require('../models/tickets');
 const axios = require('axios');
-
+const isAuthenticated = require('../../middlewares/isAuthenticated');
 
 
 
@@ -24,6 +24,8 @@ module.exports.book_post =  (req,res) => {
     const price = parseInt(req.body.price);
     const booking_id = Math.random().toString(36).substr(2, 5);
     let total = quantity*price;
+    console.log(isAuthenticated.userEmail);
+    
 
     // axios.get("http://localhost:4003/flight/search", {
     //     query: {
@@ -36,7 +38,7 @@ module.exports.book_post =  (req,res) => {
     const book_ticket = new Ticket({
         booking_id,
         flight_id: req.body.flight_id,
-        user_id: req.body.user_id,
+        //user_id: req.body.user_id,
         quantity,
         total_price:total
     })

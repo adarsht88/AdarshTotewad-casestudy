@@ -1,5 +1,6 @@
 const {Router} = require("express");
 const flightController  =require('../controllers/flightControllers')
+const isAuthenticated = require('../../middlewares/isAuthenticated');
 
 const router =Router();
 
@@ -79,7 +80,7 @@ const router =Router();
 
 
 
-router.get('/flight',flightController.flight_get);
+router.get('/flight',isAuthenticated,flightController.flight_get);
 
 
 /**
@@ -112,7 +113,7 @@ router.get('/flight',flightController.flight_get);
 
 
 
-router.get('/flight/:id',flightController.flight_getbyId);
+router.get('/flight/:id',isAuthenticated,flightController.flight_getbyId);
 
 
 
@@ -142,7 +143,7 @@ router.get('/flight/:id',flightController.flight_getbyId);
 
 
 
-router.post('/flight',flightController.flight_post);
+router.post('/flight',isAuthenticated,flightController.flight_post);
 
 
 /**
@@ -179,7 +180,7 @@ router.post('/flight',flightController.flight_post);
 
 
 
-router.patch('/flight/:id',flightController.flight_update);
+router.patch('/flight/:id',isAuthenticated,flightController.flight_update);
 
 
 
@@ -208,7 +209,7 @@ router.patch('/flight/:id',flightController.flight_update);
 
 
 
-router.delete('/flight/:id',flightController.flight_delete);
+router.delete('/flight/:id',isAuthenticated,flightController.flight_delete);
 
 
 

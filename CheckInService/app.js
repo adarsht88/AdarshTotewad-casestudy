@@ -19,6 +19,20 @@ const options = {
 				url: "http://localhost:4005",
 			},
 		],
+		components: {
+			securitySchemes: {
+			 bearerAuth: {
+			   type: "http",
+			   scheme: "bearer",
+			   bearerFormat: "JWT",
+			 },
+		   },
+		 },
+		 security: [
+		   {
+			 bearerAuth: [],
+		   },
+		 ],
 	},
 	apis: ["./routes/*.js"],
 };
@@ -51,7 +65,7 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCr
 
 
 
-  app.use('/book',checkInRoutes);
+  app.use(checkInRoutes);
 
 
   module.exports = {
