@@ -80,7 +80,7 @@ const router =Router();
 
 
 
-router.get('/flight',isAuthenticated,flightController.flight_get);
+router.get('/flight',isAuthenticated.isAuthenticated,flightController.flight_get);
 
 
 /**
@@ -113,7 +113,7 @@ router.get('/flight',isAuthenticated,flightController.flight_get);
 
 
 
-router.get('/flight/:id',isAuthenticated,flightController.flight_getbyId);
+router.get('/flight/:id',isAuthenticated.isAuthenticated,flightController.flight_getbyId);
 
 
 
@@ -143,7 +143,7 @@ router.get('/flight/:id',isAuthenticated,flightController.flight_getbyId);
 
 
 
-router.post('/flight',isAuthenticated,flightController.flight_post);
+router.post('/flight',isAuthenticated.isAuthenticated,flightController.flight_post);
 
 
 /**
@@ -180,7 +180,7 @@ router.post('/flight',isAuthenticated,flightController.flight_post);
 
 
 
-router.patch('/flight/:id',isAuthenticated,flightController.flight_update);
+router.patch('/flight/:id',isAuthenticated.isAuthenticated,flightController.flight_update);
 
 
 
@@ -209,7 +209,7 @@ router.patch('/flight/:id',isAuthenticated,flightController.flight_update);
 
 
 
-router.delete('/flight/:id',isAuthenticated,flightController.flight_delete);
+router.delete('/flight/:id',isAuthenticated.isAuthenticated,flightController.flight_delete);
 
 
 
