@@ -75,7 +75,7 @@ const router =Router();
 
 
 
-router.post('book/checkin',isAuthenticated,checkInController.checkin_post);
+router.post('/book/checkin',isAuthenticated.isAuthenticated,checkInController.checkin_post);
 //router.delete('/flight/checkin/:id',checkInController.book_delete);
 
 
