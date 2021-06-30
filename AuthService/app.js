@@ -47,13 +47,13 @@ app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 app.use(morgan("dev"));
 
 
-app.use(cookieParser());
+
 
 
 
 app.use(express.static('public'));
 app.use(express.json());
-
+app.use(cookieParser());
 app.set('view engine', 'ejs');
 
 const dbURI = 'mongodb+srv://travis:Adarsh1998@test-adarsh.rhscl.mongodb.net/flight-BS?retryWrites=true&w=majority';

@@ -1,4 +1,5 @@
 const User = require('../models/users')
+const Admin = require('../models/admin')
 const jwt = require("jsonwebtoken");
 
 const handleErrors = (err)=>{
@@ -19,8 +20,8 @@ const handleErrors = (err)=>{
 }
 
 const maxAge = 3 * 24 * 60 * 60
-const createToken = ( email) => {
-    return jwt.sign({ email }, 'secret', {
+const createToken = ( email,userType) => {
+    return jwt.sign({ email,userType }, 'secret', {
         expiresIn: maxAge
     })
 }
@@ -50,9 +51,9 @@ module.exports.signup_post = (req, res) => {
         User.create(user)
             .then((user) => {
                 console.log(user)
-                const token = createToken( user.email)
-                res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 })
-                res.status(200).json({ message: "User Created and loged Successfully" });
+                const token = createToken( user.email, user.userType)
+               // res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 })
+                res.status(200).json({ message: "User Created and loged Successfully " +token });
             })
             .catch((err) => {
                 res.status(400).json({ message: "Email already exist" });
@@ -91,7 +92,7 @@ module.exports.login_post = async (req, res) => {
                 const user = await User.login(email, password);
                 console.log(user);
                 if(user != "incorrect password"){
-                    const token = createToken(user.email)
+                    const token = createToken(user.email,user.userType)
                    // res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 })
                     //res.status(200).json({ token });
                     res.status(200).json({message:"Login Success: " +user.email,token});
@@ -112,8 +113,49 @@ module.exports.login_post = async (req, res) => {
     }
 
 
-    module.exports.logout_get = (req, res) => {
-        res.cookie('jwt', '', { maxAge: 1 });
-        res.redirect('/');
-      }
+    
 
+    module.exports.admin_signup_post = (req,res) => {
+        console.log(req.body)
+        const admin = {
+            email: req.body.email,
+            password: req.body.password
+        }
+        
+        try{
+            Admin.create(admin)
+            .then( (admin) => {
+                const token  = createToken(admin.email,admin.userType)
+                //res.cookie('jwt',token,{httpOnly: true,maxAge: maxAge*1000})
+                res.status(200).json({ message: "Admin Created and loged Successfully" });
+            })
+            .catch((err) => {
+                res.status(400).json({ message: "Email already exist" });
+            })
+        }catch(err){
+            const errors = "page not found"
+            res.status(404).json({ errors });
+        }
+       
+    }
+
+    module.exports.admin_login_post = async (req,res) => {
+        const { email , password } = req.body
+        if (Object.keys(req.body).length === 0) 
+        {
+                res.status(205).json({message:"Please enter all Fields"})
+        }
+        else{
+        try {
+            const admin = await Admin.login(email, password)
+            const token  = createToken(admin.email,admin.userType)
+           // res.cookie('jwt',token,{httpOnly: true,maxAge: maxAge*1000})
+            res.status(200).json({message:"Login Success: " +admin.email,token});
+        }
+        catch (err) {
+            const errors = handleErrors(err);
+            const { email, password} =errors
+            res.status(400).json({message: email.length>0?email:password });
+        }
+        }
+    }

@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const {signup_get, signup_post, login_get, login_post, logout_get}  =require('../controllers/authControllers')
+const {signup_get, signup_post, login_get, login_post, logout_get, admin_login_post, admin_signup_post}  =require('../controllers/authControllers')
 
 
 
@@ -14,6 +14,7 @@ const {signup_get, signup_post, login_get, login_post, logout_get}  =require('..
  *       required:
  *         - email
  *         - password
+ *         - userType
  *       properties:
  *         id:
  *           type: string
@@ -27,10 +28,36 @@ const {signup_get, signup_post, login_get, login_post, logout_get}  =require('..
  *         password:
  *           type: string
  *           description: password of user
+ *         userType:
+ *           type: boolean
+ *           description: type of adim
  *       example:
  *           id: 60ca4440b297eb46f89b077b
  *           email: adarsh@1admin
  *           password: 123456789
+ *     Admin:
+ *       type: object
+ *       required:
+ *         - email
+ *         - password
+ *         - userType
+ *       properties:
+ *         id:
+ *           type: string
+ *           description: The auto-generated id of the admin
+ *         email:
+ *           type: string
+ *           description: This is email pof admin
+ *         password:
+ *           type: string
+ *           description: password of admin
+ *         userType:
+ *           type: boolean
+ *           description: type of admin
+ * 
+ * 
+ * 
+ * 
  */
 
 /**
@@ -132,7 +159,68 @@ router.post('/login',login_post);
 
 
 
-router.get('/logout', logout_get);
+
+
+/**
+ * @swagger
+ * /admin/signup:
+ *   post:
+ *     summary: To Add admin
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Admin'
+ *     responses:
+ *       200:
+ *         description: Admin Created Successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Admin'
+ *       400:
+ *         description: Admin already exits
+ *       404:
+ *         description: page not found
+ *      
+ */
+
+
+
+router.post('/admin/signup',admin_signup_post)
+
+
+
+/**
+ * @swagger
+ * /admin/login:
+ *   post:
+ *     summary: To Login
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Admin'
+ *     responses:
+ *       200:
+ *         description: Login Successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Admin'
+ *       205:
+ *         description: Please enter all Fields
+ *       400:
+ *         description: Some validation error.
+ *      
+ */
+
+
+router.post('/admin/login',admin_login_post)
 
 
 

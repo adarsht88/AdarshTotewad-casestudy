@@ -30,7 +30,7 @@ describe('/GET Users', () => {
       chai.request(server.app)
           .get('/signup')
           .end((err, res) => {
-                res.should.have.status(404);
+                res.should.have.status(200);
             done();
           });
     });
@@ -71,7 +71,7 @@ describe('/POST User', () => {
           .end((err, res) => {
                 res.should.have.status(400);
                 res.body.should.be.a('object');
-                res.body.errors.flight_id.should.have.property('message').eql("Email already exist");
+                res.body.should.have.property('message').eql("Email already exist");
             done();
           });
     });
@@ -98,7 +98,7 @@ describe('/POST Login', () => {
             done();
           });
         afterEach(async () => {
-            await Flight.deleteOne({full_name: "Adarsh is Testing..."})
+            await User.deleteOne({full_name: "Adarsh is Testing..."})
          });
     });
 
@@ -114,7 +114,7 @@ describe('/POST Login', () => {
           .end((err, res) => {
                 res.should.have.status(400);
                 res.body.should.be.a('object');
-                res.body.errors.flight_id.should.have.property('message').eql("Booking Cancelation request succesffull");
+                res.body.should.have.property('message').eql("Booking Cancelation request succesffull");
             done();
           });
     });
