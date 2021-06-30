@@ -93,7 +93,7 @@ router.get('/flight',isAuthenticated.isAuthenticated,flightController.flight_get
  *       - in: path
  *         name: id
  *         schema:
- *           type: string
+ *           type: number
  *         required: true
  *         description: The flight id
  *     responses:

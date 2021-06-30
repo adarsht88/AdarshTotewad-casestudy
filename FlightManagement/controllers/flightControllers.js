@@ -15,8 +15,8 @@ module.exports.flight_get = (req,res) => {
 
 
 module.exports.flight_getbyId = (req,res) => {
-    const id = req.params.id;
-    Flight.findById(id)
+    console.log(id);
+    Flight.find({flight_id:id})
         .then((result)=>{
             res.status(200).send(result);
         })
