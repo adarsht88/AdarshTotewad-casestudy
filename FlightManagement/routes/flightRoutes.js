@@ -113,7 +113,7 @@ router.get('/flight',isAuthenticated.isAuthenticated,flightController.flight_get
 
 
 
-router.get('/flight/:id',isAuthenticated.isAuthenticated,flightController.flight_getbyId);
+router.get('/flight/:id',flightController.flight_getbyId);
 
 
 
