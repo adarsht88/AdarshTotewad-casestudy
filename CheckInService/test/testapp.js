@@ -7,13 +7,15 @@ chai.use(chaiHttp);
 const server = require("../app.js");
 var app = request.agent(server.app);
 let should = chai.should();
+const isAuthenticated = require('../../middlewares/isAuthenticated');
 
 var checkIn = require("../models/seats");
 
 
+const auth = isAuthenticated.isAuthenticated;
 
 
-describe('/POST checkin', () => {
+describe('/POST checkin',  () => {
     it('it should check In', (done) => {
         let book = {
             booking_id:"mjlxu",
