@@ -80,6 +80,7 @@ const router =Router();
 
 
 
+//router.get('/flight',flightController.flight_get);
 router.get('/flight',isAuthenticated.isAuthenticated,flightController.flight_get);
 
 
@@ -143,8 +144,9 @@ router.get('/flight/:id',flightController.flight_getbyId);
 
 
 
-router.post('/flight',isAuthenticated.isAuthenticated,flightController.flight_post);
+//router.post('/flight',flightController.flight_post);
 
+router.post('/flight',isAuthenticated.isAuthenticated,flightController.flight_post);
 
 /**
  * @swagger
@@ -180,8 +182,9 @@ router.post('/flight',isAuthenticated.isAuthenticated,flightController.flight_po
 
 
 
-router.patch('/flight/:id',isAuthenticated.isAuthenticated,flightController.flight_update);
+//router.patch('/flight/:id',flightController.flight_update);
 
+router.patch('/flight/:id',isAuthenticated.isAuthenticated,flightController.flight_update);
 
 
 /**
@@ -209,8 +212,9 @@ router.patch('/flight/:id',isAuthenticated.isAuthenticated,flightController.flig
 
 
 
-router.delete('/flight/:id',isAuthenticated.isAuthenticated,flightController.flight_delete);
+//router.delete('/flight/:id',flightController.flight_delete);
 
+router.delete('/flight/:id',isAuthenticated.isAuthenticated,flightController.flight_delete);
 
 
 

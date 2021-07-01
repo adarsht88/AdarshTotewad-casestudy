@@ -21,8 +21,6 @@ describe('/GET Flight', () => {
             done();
           });
     });
-
-
     it('it should not GET all the Flights', (done) => {
       chai.request(server.app)
           .get('/flights')
@@ -36,10 +34,10 @@ describe('/GET Flight', () => {
 
 
 
-describe('/POST Flight', () => {
+ describe('/POST Flight', () => {
     it('it should add flight', (done) => {
         let book = {
-            flight_id:149,
+            flight_id:1709,
             name: "Air Asia",
             source: "Mumbai",
             destination: "pune",
@@ -54,7 +52,7 @@ describe('/POST Flight', () => {
                 expect(res).to.have.status(200);
                 res.body.should.be.a('object');
                 res.body.should.have.property('_id');
-                res.body.should.have.property('flight_id').eq(149);
+                res.body.should.have.property('flight_id').eq(1709);
                 res.body.should.have.property('name').eq("Air Asia");
                 res.body.should.have.property('source').eq("Mumbai");
                 res.body.should.have.property('destination').eq("pune");
@@ -87,6 +85,22 @@ describe('/POST Flight', () => {
                 done();
           });
     });
+    it('it should not add a flight given the id', (done) => {
+        let book = {
+            name: "Air Asia",
+            source: "Mumbai",
+            destination: "pune",
+            time: "9:30",
+            price: 5000 
+        }
+      chai.request(server.app)
+          .post('/flights')
+          .send(book)
+          .end((err, res) => {
+                res.should.have.status(404);
+                done();
+          });
+    });
 
     
 });
@@ -102,7 +116,16 @@ describe('/DELETE/:id book', () => {
                 done();
               });
         });
+    it('it should not DELETE a book given the id', (done) => {
+            let id = '60d2015d39076e0e7488f544';
+                chai.request(server.app)
+                .delete('/flights/' + id)
+                .end((err, res) => {
+                    res.should.have.status(404);
+                done();
+                });
     });
+});
 
 
 
@@ -124,13 +147,42 @@ describe('/PATCH/:id book', () => {
         chai.request(server.app)
         .patch('/flight/'+id)
         .send(book)
-        .end((err,response)=>{
-            response.should.have.status(200);
-            response.body.should.be.a('object');
-            
+        .end((err,res)=>{
+            res.should.have.status(200);
+            res.body.should.be.a('object');    
         done();
         })
     })
+    it('it should UPDATE a flight given the id', (done) => {
+        let  book = {
+             flight_id: 101,
+             name: "Air Asia",
+             source: "Tirupati",
+             destination: "Nanded",
+             date: "2021-06-19",
+             time: "09:30",
+             price: 5000
+         }
+         id = '60de7488f544';
+         chai.request(server.app)
+         .patch('/flight/'+id)
+         .send(book)
+         .end((err,res)=>{
+             res.should.have.status(200);
+             res.body.should.be.a('object');    
+         done();
+         })
+     })
+     it('it should not update a flight by the given id', (done) => {
+        id = '60d2015d39076e0e7488f544';
+        chai.request(server.app)
+            .get('/flights/'+id)
+            .end((err, res) => {
+            expect(res).to.have.status(404);
+            done();
+            });
+        }); 
+
 });
 
 
@@ -139,22 +191,31 @@ describe('/PATCH/:id book', () => {
 
 describe('/GET/:id flight', () => {
     it('it should GET a flight by the given id', (done) => {
-        id = '60d2015d39076e0e7488f544';
+        id = 129;
         chai.request(server.app)
-          .get('/flight/60d2015d39076e0e7488f544')
+          .get('/flight/'+id)
           .end((err, res) => {
             expect(res).to.have.status(200);
-            res.body.should.be.a('object');
-        //     res.body.should.have.property('_id');
-        //     res.body.should.have.property('flight_id').eq(180);
-        //     res.body.should.have.property('name').eq("Air Asia");
-        //     res.body.should.have.property('source').eq("Mumbai");
-        //     res.body.should.have.property('destination').eq("pune");
-        //     res.body.should.have.property('date').eq("Sat Jun 19 2021 05:30:00 GMT+0530 (India Standard Time)");
-        //     res.body.should.have.property('time').eq("9:30");
-        //     res.body.should.have.property('price').eq(5000);
             done();
           });
-        });
     });
+    it('it should not GET a flight by the given id', (done) => {
+        id = 8009;
+        chai.request(server.app)
+            .get('/flight/'+id)
+            .end((err, res) => {
+            expect(res).to.have.status(200);
+            done();
+            });
+    });
+    it('it should not GET a flight by the given id', (done) => {
+        id = 8009;
+        chai.request(server.app)
+            .get('/flights/'+id)
+            .end((err, res) => {
+            expect(res).to.have.status(404);
+            done();
+            });
+    });
+});
 
