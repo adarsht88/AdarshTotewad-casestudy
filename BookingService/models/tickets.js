@@ -11,15 +11,19 @@ const ticketSchema = new Schema({
         default: Date.now
     },
     flight_id: {
-        type:Number,
-        required:true       
+        type:Number, 
+        required:true      
     },
     user_id: {
         type:String,
-        required:true
+        required:false
     },
     quantity: {
         type:Number,
+        required:true
+    },
+    classType: {
+        type:String,
         required:true
     },
     total_price: {

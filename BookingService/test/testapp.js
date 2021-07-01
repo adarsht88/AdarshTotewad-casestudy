@@ -1,7 +1,6 @@
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const request = require("supertest");
-let mongoose = require("mongoose");
 const expect = chai.expect;
 chai.use(chaiHttp);
 const server = require("../app.js");
@@ -16,10 +15,9 @@ const Ticket = require('../models/tickets');
 describe('/POST booking', () => {
     it('it should book flight', (done) => {
         let book = {
-            flight_id: 126,
-            user_id: "adarsh101@admin",
-            quantity: 5,
-            price: 1000
+            flight_id: 1026,
+            quantity: 1,
+            classType:"first class"
         }
       chai.request(server.app)
         .post('/flight/book')
@@ -29,21 +27,20 @@ describe('/POST booking', () => {
                 res.body.should.be.a('object');
                 res.body.should.have.property('_id');
                 res.body.should.have.property('booking_id');
-                res.body.should.have.property('flight_id').eq(126);
-                res.body.should.have.property('user_id').eq("adarsh101@admin");
-                res.body.should.have.property('quantity').eq(5);
+                res.body.should.have.property('flight_id').eq(1026);
+                res.body.should.have.property('quantity').eq(1);
+                res.body.should.have.property('classType').eq("first class");
                 res.body.should.have.property('total_price').eq(5000);
                 res.body.should.have.property('booking_date');
             done();
         });
         afterEach(async () => {
-            await Flight.deleteOne({full_name: "Adarsh is Testing..."})
+            await Ticket.deleteOne({full_name: "Adarsh is Testing..."})
          });
     });
 
     it('it should not book flight', (done) => {
         let book = {
-            user_id: "adarsh101@admin",
             quantity: 5,
             price: 1000
         }
@@ -59,23 +56,54 @@ describe('/POST booking', () => {
           done();
         });
 
-    });    
+    });
+    it('it should not book flight', (done) => {
+        let book = {
+            flight_id: 1026,
+            quantity: 1
+        }
+      chai.request(server.app)
+          .post('/flights/book')
+          .send(book)
+          .end((err, res) => {
+              res.should.have.status(404);
+               done();
+        });
+
+    });        
 });
 
 
 describe('/DELETE/:id book', () => {
+    it('it should not DELETE a book given the id', (done) => {
+        let id = 'haz1p';
+          chai.request(server.app)
+          .delete('/flights/cancel/' + id)
+          .end((err, res) => {
+                res.should.have.status(404);
+            done();
+        });
+    });
     it('it should DELETE a book given the id', (done) => {
-            let id = '17rgs';
+            let id = 'haz1p';
               chai.request(server.app)
-              .delete('/flight/cancelticket/' + id)
+              .delete('/flight/cancel/' + id)
               .end((err, res) => {
                     res.should.have.status(200);
-                    res.body.should.have.property('message').eql("Booking not succesffull");
+                    res.body.should.have.property('message').eql("Booking Cancelation request succesffull");
 
                 done();
             });
     });
+    it('it should not DELETE a book given the id', (done) => {
+        let id = '';
+          chai.request(server.app)
+          .delete('/flight/cancel/' + id)
+          .end((err, res) => {
+                res.should.have.status(404);
+            done();
+        });
+    });
 });
-
 
 
