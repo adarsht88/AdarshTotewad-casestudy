@@ -37,5 +37,13 @@ describe('/GET/:id flight', () => {
         
             done();
           });
-        });
+      });
+      it('it should not GET a flight by the given id', (done) => {
+        chai.request(server.app)
+          .get('/flights/search?source=pune&destination=')
+          .end((err, res) => {
+            expect(res).to.have.status(404);
+            done();
+          });
+      });
 });
