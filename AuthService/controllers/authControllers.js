@@ -127,7 +127,7 @@ module.exports.login_post = async (req, res) => {
             .then( (admin) => {
                 const token  = createToken(admin.email,admin.userType)
                 //res.cookie('jwt',token,{httpOnly: true,maxAge: maxAge*1000})
-                res.status(200).json({ message: "Admin Created and loged Successfully" });
+                res.status(200).json({ message: "Admin Created and loged Successfully  "+token });
             })
             .catch((err) => {
                 res.status(400).json({ message: "Email already exist" });

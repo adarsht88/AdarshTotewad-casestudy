@@ -42,7 +42,7 @@ describe('/GET Users', () => {
 describe('/POST User', () => {
     it('it should add User', (done) => {
         let user = {
-            email: "adarshh@admin",
+            email: "adarrsh9458y@admin",
             password: "1000000"
         }
       chai.request(server.app)
