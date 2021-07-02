@@ -37,7 +37,7 @@ describe('/GET Flight', () => {
  describe('/POST Flight', () => {
     it('it should add flight', (done) => {
         let book = {
-            flight_id:1709,
+            flight_id:1790,
             name: "Air Asia",
             source: "Mumbai",
             destination: "pune",
@@ -52,7 +52,7 @@ describe('/GET Flight', () => {
                 expect(res).to.have.status(200);
                 res.body.should.be.a('object');
                 res.body.should.have.property('_id');
-                res.body.should.have.property('flight_id').eq(1709);
+                res.body.should.have.property('flight_id').eq(1790);
                 res.body.should.have.property('name').eq("Air Asia");
                 res.body.should.have.property('source').eq("Mumbai");
                 res.body.should.have.property('destination').eq("pune");
