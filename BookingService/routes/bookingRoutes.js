@@ -34,6 +34,9 @@ const router =Router();
  *         quantity:
  *           type: number
  *           description: The total tickets
+ *         classType:
+ *           type: string
+ *           description: Class of tickets
  *         total_price:
  *           type: number
  *           description: This is total checkout price
@@ -50,8 +53,34 @@ const router =Router();
 
 
 
-//router.get('/flight/book',bookingController.book_get);
 
+/**
+ * @swagger
+ * /flight/book/{id}:
+ *   get:
+ *     summary:  Booking Summary
+ *     tags: [Book]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: number
+ *         required: true
+ *         description: The Flight id
+ * 
+ *     responses:
+ *       200:
+ *         description: The booking Summary
+ *       400:
+ *         description: Can't show booking summary
+ */
+
+
+
+
+//router.get('/flight/book/:id',bookingController.book_getinfo);
+
+router.get('/flight/book/:id',isAuthenticated.isAuthenticated,bookingController.book_getinfo);
 
 
 
@@ -79,12 +108,13 @@ const router =Router();
  */
 
 
-router.post('/flight/book',isAuthenticated,bookingController.book_post);
+//router.post('/flight/book',bookingController.book_post);
 
+router.post('/flight/book',isAuthenticated.isAuthenticated,bookingController.book_post);
 
 /**
  * @swagger
- * /flight/cancelticket/{id}:
+ * /flight/cancel/{id}:
  *   delete:
  *     summary: Cancel Booking
  *     tags: [Book]
@@ -107,7 +137,10 @@ router.post('/flight/book',isAuthenticated,bookingController.book_post);
 
 
 
-router.delete('flight/cancelticket/:id',isAuthenticated,bookingController.book_delete);
+
+//router.delete('/flight/cancel/:id',bookingController.book_delete);
+router.delete('/flight/cancel/:id',isAuthenticated.isAuthenticated,bookingController.book_delete);
+
 
 
 
